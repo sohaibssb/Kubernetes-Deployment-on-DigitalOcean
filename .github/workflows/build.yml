@@ -27,8 +27,11 @@ jobs:
           token: ${{ secrets.DO_API_TOKEN_KEY }}
       - name: voir images
         run: docker images
-      - name: Login to docker container registry
-        run: doctl registry login --expiry-seconds 1200
+      - name: Login to docker hub
+        uses: docker/login-action@v1
+        with:
+          username: sohaibssb
+          password: DOCKERHUB_PASSWORD
       - name: Push Cars image in to Digital ocean Container Registry
         run: docker push sohaibssb/cars_service:latest
       - name: Push Payment image in to Digital ocean Container Registry
