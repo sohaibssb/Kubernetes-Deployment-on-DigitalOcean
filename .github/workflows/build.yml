@@ -52,7 +52,6 @@ jobs:
         run: |
           cd Microservers-CarRentalSystem
           cd k8s
-          kubectl delete -f load-Balancer.yaml
           helm upgrade --install postgres postgres-chart/
           helm upgrade --install services services-chart/
           kubectl apply -f load-Balancer.yaml
