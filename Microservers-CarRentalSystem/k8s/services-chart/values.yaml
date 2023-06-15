@@ -1,0 +1,47 @@
+cars:
+  service:
+    port: 8070
+    image:
+      name: sohaibssb/cars_service
+      version: "latest"
+    database:
+      name: cars
+payment:
+  service:
+    port: 8070
+    image:
+      name: sohaibssb/payment_service
+      version: "latest"
+    database:
+      name: rentals
+rental:
+  service:
+    port: 8060
+    image:
+      name: sohaibssb/rental_service
+      version: "latest"
+    database:
+      name: payments
+auth:
+  service:
+    port: 8090
+    image:
+      name: sohaibssb/auth_service
+      version: "latest"
+    database:
+      name: session
+statistiques:
+  service:
+    port: 8040
+    image:
+      name: sohaibssb/statistique_service
+      version: "latest"
+    database:
+      name: statistique
+gateway:
+  service:
+    port: 8000
+    image:
+      name: sohaibssb/gate_way_service
+      version: "latest"
+    isGateway: true

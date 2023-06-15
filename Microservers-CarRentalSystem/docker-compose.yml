@@ -1,0 +1,94 @@
+version: '3'
+services:
+  cars_service:
+    image: sohaibssb/cars_service
+    build: src/cars_service
+    restart: always
+    environment:
+      DATA_BASE_PORT: "5432"
+      DATA_BASE_NAME: "cars"
+      DATA_BASE_USER: "program"
+      DATA_BASE_PASS: "test"
+      DATA_BASE_HOST: "postgres"
+    ports:
+      - "8070:8070"
+  payment_service:
+    image: sohaibssb/payment_service
+    build: src/payment_service
+    container_name: payment_service
+    environment:
+      DATA_BASE_PORT: "5432"
+      DATA_BASE_NAME: "rentals"
+      DATA_BASE_USER: "program"
+      DATA_BASE_PASS: "test"
+      DATA_BASE_HOST: "postgres"
+      KAFKA_HOST: "kafka"
+      KAFKA_PORT: "9092"
+    ports:
+      - "8050:8050"
+
+  rental_service:
+    image: sohaibssb/rental_service
+    build: src/rental_service
+    container_name: rental_service
+    environment:
+      DATA_BASE_PORT: "5432"
+      DATA_BASE_NAME: "payments"
+      DATA_BASE_USER: "program"
+      DATA_BASE_PASS: "test"
+      DATA_BASE_HOST: "postgres"
+    ports:
+      - "8060:8060"
+  auth_service:
+    image: sohaibssb/auth_service
+    build: src/auth_service
+    container_name: auth_service
+    environment:
+      DATA_BASE_PORT: "5432"
+      DATA_BASE_NAME: "user_db"
+      DATA_BASE_USER: "program"
+      DATA_BASE_PASS: "test"
+      DATA_BASE_HOST: "postgres"
+      AUTH_APP_OKTA_BASE_URL: "dev-26551516.okta.com"
+      AUTH_SECRET_KEY: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+    ports:
+      - "8090:8090"
+
+  gate_way_service:
+    image: sohaibssb/gate_way_service
+    build: src/gate_way_service
+    container_name: gate_way_service
+    environment:
+      DATA_BASE_PORT: "5432"
+      DATA_BASE_NAME: "postgres"
+      DATA_BASE_USER: "program"
+      DATA_BASE_PASS: "test"
+      DATA_BASE_HOST: "postgres"
+      CARS_SERVICE_HOST: "cars_service"
+      CARS_SERVICE_PORT: "8070"
+      PAYMENT_SERVICE_HOST: "payment_service"
+      PAYMENT_SERVICE_PORT: "8050"
+      RENTAL_SERVICE_HOST: "rental_service"
+      RENTAL_SERVICE_PORT: "8060"
+      AUTH_SERVICE_HOST: "auth_service"
+      AUTH_SERVICE_PORT: "8090"
+      STATISTIQUE_SERVICE_HOST: "statistique_service"
+      STATISTIQUE_SERVICE_PORT: "8040"
+    ports:
+      - "8000:8000"
+
+  statistique_service:
+    image: sohaibssb/statistique_service
+    build: src/statistique
+    container_name: statistique_service
+    environment:
+      DATA_BASE_PORT: "5432"
+      DATA_BASE_NAME: "statistique"
+      DATA_BASE_USER: "program"
+      DATA_BASE_PASS: "test"
+      DATA_BASE_HOST: "postgres"
+    ports:
+      - "8040:8040"
+
+volumes:
+  db-data:
