@@ -18,7 +18,9 @@ jobs:
           fetch-depth: 0
       - uses: docker/setup-buildx-action@v2
       - name: Build Images
-        run: docker compose build
+        run: |
+          cd Microservers-CarRentalSystem
+          docker compose build
       - name: Install doctl
         uses: digitalocean/action-doctl@v2
         with:
@@ -41,9 +43,11 @@ jobs:
         run: docker push sohaibssb/statistique_service:latest
       - name: k8s cluster kubeconfig
         run: |
+          
           doctl kubernetes cluster kubeconfig save --expiry-seconds 1200 rsoi-cluster
       - name: Deployment to the cluster
         run: |
+          cd Microservers-CarRentalSystem
           cd k8s
           kubectl delete -f load-Balancer.yaml
           helm upgrade --install postgres postgres-chart/
