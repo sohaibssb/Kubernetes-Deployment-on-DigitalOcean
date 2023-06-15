@@ -6,9 +6,9 @@ pg_db = PostgresqlDatabase(
     user=os.getenv('DATA_BASE_USER'),
     password=os.getenv('DATA_BASE_PASS'),
     host=os.getenv('DATA_BASE_HOST'),
-    port=int(os.getenv('DATA_BASE_PORT'))
+    port=5432
 )
-
+# port=int(os.getenv('DATA_BASE_PORT'))
 
 class BaseModel(Model):
     class Meta:
