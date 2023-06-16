@@ -90,3 +90,14 @@ services:
       DATA_BASE_HOST: "postgres"
     ports:
       - "8040:8040"
+  web:
+    image: sohaibssb/web
+    build: ./src/Authentication/
+    dockerfile: dockerfile
+    ports:
+      - '3000:3000'
+    environment:
+      REACT_APP_OKTA_BASE_URL: "dev-26551516.okta.com"
+      REACT_APP_OKTA_CLIENT_ID: "0oa9vs52rl8RkBBPR5d7"
+      REACT_APP_OKTA_REDIRECTURI: "http://0.0.0.0:3000"
+      REACT_APP_API_BASE_URL: "http://0.0.0.0:8000"
