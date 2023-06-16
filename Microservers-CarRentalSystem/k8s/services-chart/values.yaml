@@ -42,8 +42,9 @@ web:
   service:
     port: 3000
     image:
-      name: sohaibssb/web
+      name: sohaibssb/web_service
       vesion: "latest"
+    database: autre
 gateway:
   service:
     port: 8000

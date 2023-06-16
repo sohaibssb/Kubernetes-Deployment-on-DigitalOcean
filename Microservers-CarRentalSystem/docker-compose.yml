@@ -90,7 +90,7 @@ services:
       DATA_BASE_HOST: "postgres"
     ports:
       - "8040:8040"
-  web:
+  web_service:
     image: sohaibssb/web
     build:
       context: ./src/Authentication/
