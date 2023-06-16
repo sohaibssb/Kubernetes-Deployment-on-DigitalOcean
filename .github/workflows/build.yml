@@ -44,6 +44,8 @@ jobs:
         run: docker push sohaibssb/rental_service:latest
       - name: Push Statistiques image in to Digital ocean Container Registry
         run: docker push sohaibssb/statistique_service:latest
+      - name: Push web image to docker hub
+        run: docker push sohaibssb/web_service:latest
       - name: k8s cluster kubeconfig
         run: |
           
