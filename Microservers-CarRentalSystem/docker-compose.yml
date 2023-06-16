@@ -92,8 +92,9 @@ services:
       - "8040:8040"
   web:
     image: sohaibssb/web
-    build: src/Authentication
-    dockerfile: dockerfile
+    build:
+      context: ./src/Authentication/
+      dockerfile: Dockerfile
     ports:
       - '3000:3000'
     environment:
