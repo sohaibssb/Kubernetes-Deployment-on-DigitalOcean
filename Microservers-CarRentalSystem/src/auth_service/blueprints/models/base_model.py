@@ -3,10 +3,10 @@ from peewee import Model, PostgresqlDatabase
 
 
 pg_db = PostgresqlDatabase(
-    os.getenv('DATA_BASE_NAME'),
-    user=os.getenv('DATA_BASE_USER'),
-    password=os.getenv('DATA_BASE_PASS'),
-    host=os.getenv('DATA_BASE_HOST'),
+    "user_db",
+    user="program",
+    password="test",
+    host="postgres",
     port=5432
 )
 
