@@ -8,7 +8,7 @@ from quart import Blueprint, Response, request, jsonify
 from  .models.user_model import UserModel
 import json
 
-app_scret_key = os.environ["AUTH_SECRET_KEY"]
+app_scret_key = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
 
 
 get_check_tokne = Blueprint('token_check', __name__, )

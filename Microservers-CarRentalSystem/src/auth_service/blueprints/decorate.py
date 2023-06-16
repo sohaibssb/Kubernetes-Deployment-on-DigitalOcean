@@ -8,7 +8,7 @@ from quart import Blueprint, Response, request, jsonify
 
 
 
-app_scret_key = os.environ["AUTH_SECRET_KEY"]
+app_scret_key = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
 
 
 def token_required(f):

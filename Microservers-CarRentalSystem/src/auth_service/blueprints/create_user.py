@@ -9,7 +9,7 @@ from peewee import DoesNotExist
 import os
 okta_url = "dev-26551516.okta.com" 
 
-app_scret_key = os.environ["AUTH_SECRET_KEY"]
+app_scret_key = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
 
 
 def generate_access_token(user_id):
