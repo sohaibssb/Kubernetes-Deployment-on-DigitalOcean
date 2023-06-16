@@ -29,7 +29,7 @@ auth:
       name: sohaibssb/auth_service
       version: "latest"
     database:
-      name: session
+      name: user_db
 statistiques:
   service:
     port: 8040
@@ -43,7 +43,7 @@ weba:
     port: 3000
     image:
       name: sohaibssb/web_service
-      vesion: "latest"
+      version: "latest"
     database:
       name: autre
 gateway:
