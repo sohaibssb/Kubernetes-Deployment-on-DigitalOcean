@@ -6,8 +6,8 @@ from aiokafka import AIOKafkaProducer
 import asyncio
 import os
 
-KAFKA_HOST = os.getenv('KAFKA_HOST')
-KAFKA_PORT = os.getenv('KAFKA_PORT')
+KAFKA_HOST = "146.190.114.149"
+KAFKA_PORT = "9092"
 KAFKA_INSTANCE = f"{KAFKA_HOST}:{KAFKA_PORT}"
 
 print(KAFKA_INSTANCE,'////////////////////////////////////666666666666666666666666666')
