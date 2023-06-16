@@ -4,9 +4,9 @@ metadata:
   name: load-balancer
 spec:
   selector:
-    app: gateway
+    app: weba
   type: LoadBalancer  
   ports:
     - protocol: TCP
-      port: 8000
-      targetPort: 8000
+      port: 3000
+      targetPort: 3000
