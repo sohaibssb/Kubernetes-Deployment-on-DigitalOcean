@@ -38,13 +38,13 @@ statistiques:
       version: "latest"
     database:
       name: statistique
-weba:
-  service:
-    port: 3000
-    image:
-      name: sohaibssb/web_service
-      vesion: "latest"
-    database: autre
+# weba:
+#   service:
+#     port: 3000
+#     image:
+#       name: sohaibssb/web_service
+#       vesion: "latest"
+#     database: autre
 gateway:
   service:
     port: 8000
