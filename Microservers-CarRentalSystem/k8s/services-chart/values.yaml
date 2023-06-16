@@ -44,7 +44,8 @@ weba:
     image:
       name: sohaibssb/web_service
       vesion: "latest"
-    database: autre
+    database:
+      name: autre
 gateway:
   service:
     port: 8000
