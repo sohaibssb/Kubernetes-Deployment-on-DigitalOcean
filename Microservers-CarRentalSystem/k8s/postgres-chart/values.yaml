@@ -21,6 +21,8 @@ datases:
     user: program
   - name: payments
     user: program
+  - name: autre
+    user: program
 
 resources:
   requests:
