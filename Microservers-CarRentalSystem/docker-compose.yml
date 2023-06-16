@@ -94,6 +94,11 @@ services:
     image: sohaibssb/web_service
     build: src/Authentication
     environment:
+      DATA_BASE_PORT: "5432"
+      DATA_BASE_NAME: "autre"
+      DATA_BASE_USER: "program"
+      DATA_BASE_PASS: "test"
+      DATA_BASE_HOST: "postgres"
       REACT_APP_OKTA_BASE_URL: "dev-26551516.okta.com"
       REACT_APP_OKTA_CLIENT_ID: "0oa9vs52rl8RkBBPR5d7"
       REACT_APP_OKTA_REDIRECTURI: "http://0.0.0.0:3000"
