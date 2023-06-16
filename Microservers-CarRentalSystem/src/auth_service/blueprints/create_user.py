@@ -7,7 +7,7 @@ from .models.user_model import UserModel
 from .models.user_token import Usertoken
 from peewee import DoesNotExist
 import os
-okta_url = os.environ["AUTH_APP_OKTA_BASE_URL"] 
+okta_url = "dev-26551516.okta.com" 
 
 app_scret_key = os.environ["AUTH_SECRET_KEY"]
 
