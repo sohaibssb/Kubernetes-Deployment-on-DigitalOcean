@@ -38,6 +38,12 @@ statistiques:
       version: "latest"
     database:
       name: statistique
+web:
+  service:
+    port: 3000
+    image:
+      name: sohaibssb/web
+      vesion: "latest"
 gateway:
   service:
     port: 8000
