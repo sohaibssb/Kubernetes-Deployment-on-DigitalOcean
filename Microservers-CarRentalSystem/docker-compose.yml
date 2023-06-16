@@ -109,3 +109,5 @@ services:
     ports:
       - "8040:8040"
 
+volumes:
+  db-data:
