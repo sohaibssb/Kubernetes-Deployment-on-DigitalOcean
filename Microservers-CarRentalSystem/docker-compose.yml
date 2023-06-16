@@ -20,11 +20,9 @@ services:
       retries: 3
 
   cars_service:
+    image: sohaibssb/cars_service
     build: src/cars_service
-    container_name: cars_service
-    depends_on:
-      postgres:
-        condition: service_healthy
+    restart: always
     environment:
       DATA_BASE_PORT: "5432"
       DATA_BASE_NAME: "cars"
@@ -33,15 +31,10 @@ services:
       DATA_BASE_HOST: "postgres"
     ports:
       - "8070:8070"
-
   payment_service:
+    image: sohaibssb/payment_service
     build: src/payment_service
     container_name: payment_service
-    depends_on:
-      postgres:
-        condition: service_healthy
-      kafka:
-        condition: service_healthy
     environment:
       DATA_BASE_PORT: "5432"
       DATA_BASE_NAME: "rentals"
@@ -54,11 +47,9 @@ services:
       - "8050:8050"
 
   rental_service:
+    image: sohaibssb/rental_service
     build: src/rental_service
     container_name: rental_service
-    depends_on:
-      postgres:
-        condition: service_healthy
     environment:
       DATA_BASE_PORT: "5432"
       DATA_BASE_NAME: "payments"
@@ -68,11 +59,9 @@ services:
     ports:
       - "8060:8060"
   auth_service:
+    image: sohaibssb/auth_service
     build: src/auth_service
     container_name: auth_service
-    depends_on:
-      postgres:
-        condition: service_healthy
     environment:
       DATA_BASE_PORT: "5432"
       DATA_BASE_NAME: "user_db"
@@ -85,11 +74,9 @@ services:
       - "8090:8090"
 
   gate_way_service:
+    image: sohaibssb/gate_way_service
     build: src/gate_way_service
     container_name: gate_way_service
-    depends_on:
-      postgres:
-        condition: service_healthy
     environment:
       DATA_BASE_PORT: "5432"
       DATA_BASE_NAME: "postgres"
@@ -110,13 +97,9 @@ services:
       - "8000:8000"
 
   statistique_service:
+    image: sohaibssb/statistique_service
     build: src/statistique
     container_name: statistique_service
-    depends_on:
-      postgres:
-        condition: service_healthy
-      kafka:
-        condition: service_healthy
     environment:
       DATA_BASE_PORT: "5432"
       DATA_BASE_NAME: "statistique"
@@ -126,180 +109,7 @@ services:
     ports:
       - "8040:8040"
 
-  zookeeper:
-    image: confluentinc/cp-zookeeper:latest
-    ports:
-      - 22181:2181
-    environment:
-      ZOOKEEPER_CLIENT_PORT: 2181
-
-  kafka:
-    image: confluentinc/cp-kafka:latest
-    depends_on:
-      - zookeeper
-    ports:
-      - 29092:29092
-    environment:
-      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: '1'
-      KAFKA_MIN_INSYNC_REPLICAS: '1'
-    healthcheck:
-      test: ["CMD-SHELL", "kafka-topics --bootstrap-server kafka:9092 --topic paymentData --describe"]
-      interval: 30s
-      timeout: 2s
-      retries: 15
-
-
-  init-kafka:
-    image: confluentinc/cp-kafka:latest
-    depends_on:
-      - kafka
-    entrypoint: [ '/bin/sh', '-c' ]
-    command: |
-      "
-      # blocks until kafka is reachable
-      kafka-topics --bootstrap-server kafka:9092 --list
-
-      echo -e 'Creating kafka topics'
-      kafka-topics --bootstrap-server kafka:9092 --create --if-not-exists --topic paymentData --replication-factor 1 --partitions 1
-
-      echo -e 'Successfully created the following topics:'
-      kafka-topics --bootstrap-server kafka:9092 --list
-      "
-  web:
-    build:
-      context: ./src/Authentication/
-      dockerfile: Dockerfile
-    ports:
-      - '3000:3000'
-    environment:
-      REACT_APP_OKTA_BASE_URL: "dev-26551516.okta.com"
-      REACT_APP_OKTA_CLIENT_ID: "0oa9vs52rl8RkBBPR5d7"
-      REACT_APP_OKTA_REDIRECTURI: "http://localhost:3000"
-      REACT_APP_API_BASE_URL: "http://localhost:8000"
 
 volumes:
   db-data:
-
-
-
-
-
-# version: '3'
-# services:
-#   postgres:
-#     image: library/postgres:13
-#     container_name: postgres
-#     restart: on-failure
-#     environment:
-#       POSTGRES_USER: postgres
-#       POSTGRES_PASSWORD: "postgres"
-#       POSTGRES_DB: postgres
-#     volumes:
-#       - db-data:/var/lib/postgresql/data
-#       - ./postgres/:/docker-entrypoint-initdb.d/
-#     ports:
-#       - "5433:5432"
-#     healthcheck:
-#       test: ["CMD-SHELL", "pg_isready -U postgres"]
-#       interval: 10s
-#       timeout: 5s
-#       retries: 3
-
-#   cars_service:
-#     image: sohaibssb/cars_service
-#     build: src/cars_service
-#     restart: always
-#     environment:
-#       DATA_BASE_PORT: "5432"
-#       DATA_BASE_NAME: "cars"
-#       DATA_BASE_USER: "program"
-#       DATA_BASE_PASS: "test"
-#       DATA_BASE_HOST: "postgres"
-#     ports:
-#       - "8070:8070"
-#   payment_service:
-#     image: sohaibssb/payment_service
-#     build: src/payment_service
-#     container_name: payment_service
-#     environment:
-#       DATA_BASE_PORT: "5432"
-#       DATA_BASE_NAME: "rentals"
-#       DATA_BASE_USER: "program"
-#       DATA_BASE_PASS: "test"
-#       DATA_BASE_HOST: "postgres"
-#       KAFKA_HOST: "kafka"
-#       KAFKA_PORT: "9092"
-#     ports:
-#       - "8050:8050"
-
-#   rental_service:
-#     image: sohaibssb/rental_service
-#     build: src/rental_service
-#     container_name: rental_service
-#     environment:
-#       DATA_BASE_PORT: "5432"
-#       DATA_BASE_NAME: "payments"
-#       DATA_BASE_USER: "program"
-#       DATA_BASE_PASS: "test"
-#       DATA_BASE_HOST: "postgres"
-#     ports:
-#       - "8060:8060"
-#   auth_service:
-#     image: sohaibssb/auth_service
-#     build: src/auth_service
-#     container_name: auth_service
-#     environment:
-#       DATA_BASE_PORT: "5432"
-#       DATA_BASE_NAME: "user_db"
-#       DATA_BASE_USER: "program"
-#       DATA_BASE_PASS: "test"
-#       DATA_BASE_HOST: "postgres"
-#       AUTH_APP_OKTA_BASE_URL: "dev-26551516.okta.com"
-#       AUTH_SECRET_KEY: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-#     ports:
-#       - "8090:8090"
-
-#   gate_way_service:
-#     image: sohaibssb/gate_way_service
-#     build: src/gate_way_service
-#     container_name: gate_way_service
-#     environment:
-#       DATA_BASE_PORT: "5432"
-#       DATA_BASE_NAME: "postgres"
-#       DATA_BASE_USER: "program"
-#       DATA_BASE_PASS: "test"
-#       DATA_BASE_HOST: "postgres"
-#       CARS_SERVICE_HOST: "cars_service"
-#       CARS_SERVICE_PORT: "8070"
-#       PAYMENT_SERVICE_HOST: "payment_service"
-#       PAYMENT_SERVICE_PORT: "8050"
-#       RENTAL_SERVICE_HOST: "rental_service"
-#       RENTAL_SERVICE_PORT: "8060"
-#       AUTH_SERVICE_HOST: "auth_service"
-#       AUTH_SERVICE_PORT: "8090"
-#       STATISTIQUE_SERVICE_HOST: "statistique_service"
-#       STATISTIQUE_SERVICE_PORT: "8040"
-#     ports:
-#       - "8000:8000"
-
-#   statistique_service:
-#     image: sohaibssb/statistique_service
-#     build: src/statistique
-#     container_name: statistique_service
-#     environment:
-#       DATA_BASE_PORT: "5432"
-#       DATA_BASE_NAME: "statistique"
-#       DATA_BASE_USER: "program"
-#       DATA_BASE_PASS: "test"
-#       DATA_BASE_HOST: "postgres"
-#     ports:
-#       - "8040:8040"
-
-
-# volumes:
-#   db-data:
   
