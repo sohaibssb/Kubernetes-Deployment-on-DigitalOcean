@@ -23,6 +23,7 @@ services:
     image: sohaibssb/cars_service
     build: src/cars_service
     restart: always
+    command: sh -c "python /src/main.py migrate && python /src/main.py create_tables && python /src/main.py seed_data"
     environment:
       DATA_BASE_PORT: "5432"
       DATA_BASE_NAME: "cars"
@@ -31,9 +32,7 @@ services:
       DATA_BASE_HOST: "postgres"
     ports:
       - "8070:8070"
-    depends_on:
-      - postgres
-
+      
   payment_service:
     image: sohaibssb/payment_service
     build: src/payment_service
