@@ -92,7 +92,7 @@ services:
       - "8040:8040"
   web:
     image: sohaibssb/web
-    build: ./src/Authentication/
+    build: src/Authentication
     dockerfile: dockerfile
     ports:
       - '3000:3000'
