@@ -20,7 +20,7 @@ dependencies:
     alias: statistiques
   - name: service-chart
     version: 1.0.0
-    alias: web
+    alias: weba
   - name: service-chart
     version: 1.0.0
     alias: gateway

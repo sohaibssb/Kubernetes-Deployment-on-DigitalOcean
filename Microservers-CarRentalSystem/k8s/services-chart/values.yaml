@@ -38,7 +38,7 @@ statistiques:
       version: "latest"
     database:
       name: statistique
-web:
+weba:
   service:
     port: 3000
     image:
