@@ -89,3 +89,4 @@ services:
       DATA_BASE_HOST: "postgres"
     ports:
       - "8040:8040"
+
