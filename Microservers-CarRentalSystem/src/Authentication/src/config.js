@@ -9,9 +9,9 @@ import { OktaAuth } from "@okta/okta-auth-js";
 //   pkce: true,
 // });
 const oktaAuth = new OktaAuth({
-  issuer: "https://dev-26551516.okta.com/oauth2/default",
-  clientId: "0oa9vs52rl8RkBBPR5d7",
-  redirectUri: "http://146.190.3.208:3000/login/callback",
+  issuer: `https://${process.env.REACT_APP_OKTA_BASE_URL}/oauth2/default`,
+  clientId: `${process.env.REACT_APP_OKTA_CLIENT_ID}`,
+  redirectUri: `${process.env.REACT_APP_OKTA_REDIRECTURI}` + "/login/callback",
   scopes: ["openid" ,"offline_access", "email", "profile" ,],
   pkce: false,
 });
