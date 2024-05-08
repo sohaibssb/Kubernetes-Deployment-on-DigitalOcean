@@ -1,5 +1,5 @@
 # Kubernetes Deployment on DigitalOcean
-Deployed The Application To Kubernates Digital Ocean
+Deployed The Application "Car Rental System" To Kubernates Digital Ocean
 
 This repository contains the source code and deployment configurations for a car rental system, seamlessly deployed to a Kubernetes cluster on DigitalOcean. The system is designed to manage and streamline car rental operations through efficient microservices architecture.
 
